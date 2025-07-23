@@ -23,5 +23,10 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.3",
     "@eslint/eslintrc": "^3"
-  }
+  },
+  "trustedDependencies": [
+    "@tailwindcss/oxide",
+    "sharp",
+    "unrs-resolver"
+  ]
 }
