@@ -4,10 +4,10 @@ import Link from "next/link";
 interface Props {
   category: Category;
   isOpen: boolean;
-  postion: { top: number; left: number };
+  position: { top: number; left: number };
 }
 
-export const SubcategoryMenu = ({ category, isOpen, postion }: Props) => {
+export const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
   if (
     !isOpen ||
     !category.subcategories ||
@@ -21,7 +21,7 @@ export const SubcategoryMenu = ({ category, isOpen, postion }: Props) => {
   return (
     <div
       className="fixed z-100"
-      style={{ top: postion.top, left: postion.left }}
+      style={{ top: position.top, left: position.left }}
     >
       {/* invisible bridge to maintain hover */}
       <div className="h-3 w-60" />
@@ -33,7 +33,7 @@ export const SubcategoryMenu = ({ category, isOpen, postion }: Props) => {
           {category.subcategories?.map((subcategory: Category) => (
             <Link
               key={subcategory.slug}
-              href={"/"}
+              href={"/categories/${category.slug}/${subcategory.slug}"}
               className="w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center underline font-medium"
             >
               {subcategory.name}

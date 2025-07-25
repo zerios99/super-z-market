@@ -62,7 +62,7 @@ export const CategoryDropdown = ({
       <SubcategoryMenu
         category={category}
         isOpen={isOpen}
-        postion={dropdownPosition}
+        position={dropdownPosition}
       />
     </div>
   );
