@@ -52,7 +52,7 @@ export const Navbar = () => {
       <Link href="/" className="pl-6 flex items-center">
         <span className={cn("text-5xl font-semibold", poppins.className)}>
           {" "}
-          zerios-market{" "}
+          Dukan{" "}
         </span>
       </Link>
 
