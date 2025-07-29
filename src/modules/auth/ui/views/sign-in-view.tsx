@@ -34,7 +34,7 @@ export const SignInView = () => {
   const login = useMutation(
     trpc.auth.login.mutationOptions({
       onError: (error) => {
-        toast.error(error.message || "Failed to register");
+        toast.error(error.message || "Failed to Login");
       },
       onSuccess: () => {
         toast.success("Login successfully");
@@ -58,11 +58,11 @@ export const SignInView = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5">
-      <div className="bg-[#F4F4F0)] h-screen w-full lg:col-span-3 overflow-auto">
+      <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-8 P-4 lg:p-16"
+            className="flex flex-col gap-8 p-4 lg:p-16"
           >
             <div className="flex items-center justify-between mb-8">
               <Link href="/">
