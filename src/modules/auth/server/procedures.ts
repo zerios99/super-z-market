@@ -22,7 +22,6 @@ export const authRouter = createTRPCRouter({
         where: {
           username: { equals: input.username },
         },
-        // query: { email: input.email },
       });
 
       const existingUser = existingData.docs[0];
