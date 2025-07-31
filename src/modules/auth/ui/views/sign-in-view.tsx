@@ -18,9 +18,9 @@ import {
 import { loginSchema } from "../../schemas";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTRPC } from "@/trpc/client";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,12 +31,14 @@ export const SignInView = () => {
   const router = useRouter();
 
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
   const login = useMutation(
     trpc.auth.login.mutationOptions({
       onError: (error) => {
         toast.error(error.message || "Failed to Login");
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         toast.success("Login successfully");
         router.push("/");
       },
