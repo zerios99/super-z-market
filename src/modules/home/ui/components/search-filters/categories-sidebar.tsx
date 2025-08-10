@@ -57,7 +57,7 @@ export const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
     }
   };
 
-  const handeBackClick = () => {
+  const handelBackClick = () => {
     if (parentCategories) {
       setParentCategories(null);
       setSelectedCategory(null);
@@ -79,7 +79,7 @@ export const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
         <ScrollArea className="flex flex-col overflow-auto h-full pb-2">
           {parentCategories && (
             <button
-              onClick={handeBackClick}
+              onClick={handelBackClick}
               className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
             >
               <ChevronLeftIcon className="size-4 mr-2" />
