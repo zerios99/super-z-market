@@ -29,7 +29,7 @@ const Page = async ({ params }: Props) => {
           <div className="lg:col-span-2 xl:col-span-2">
             <ProductFilters />
           </div>
-          <div className="lg-col-span-4 xl:col-span-6">
+          <div className="lg:col-span-4 xl:col-span-6">
             <Suspense fallback={<ProductListSkeleton />}>
               <ProductList category={category} />
             </Suspense>
