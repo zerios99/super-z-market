@@ -49,8 +49,11 @@ export const TagsFilter = ({ value, onChange }: Props) => {
             >
               <p className="font-medium">{tag.name}</p>
               <Checkbox
-                checked={value?.includes(tag.name)}
+                // checked={value?.includes(tag.name)}
+                // onCheckedChange={() => onClick(tag.name)}
+                checked={!!value?.includes(tag.name)}
                 onCheckedChange={() => onClick(tag.name)}
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
           ))
