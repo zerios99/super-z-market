@@ -1,4 +1,4 @@
-import { Category, Media } from "@/payload-types";
+import { Category, Media, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import type { Sort, Where } from "payload";
 import z from "zod";
@@ -16,6 +16,7 @@ export const productsRouter = createTRPCRouter({
         maxPrice: z.string().nullable().optional(),
         tags: z.array(z.string()).nullable().optional(),
         sort: z.enum(sortValues).nullable().optional(),
+        tenantSlug: z.string().nullable().optional(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -48,6 +49,12 @@ export const productsRouter = createTRPCRouter({
         where.price = {
           ...where.price,
           less_than_equal: input.maxPrice,
+        };
+      }
+
+      if (input.tenantSlug) {
+        where["tenant.slug"] = {
+          equals: input.tenantSlug,
         };
       }
 
@@ -95,7 +102,7 @@ export const productsRouter = createTRPCRouter({
 
       const data = await ctx.db.find({
         collection: "products",
-        depth: 1,
+        depth: 2,
         where,
         sort,
         page: input.cursor,
@@ -106,121 +113,8 @@ export const productsRouter = createTRPCRouter({
         docs: data.docs.map((doc) => ({
           ...doc,
           image: doc.image as Media | null,
+          tenant: doc.tenant as Tenant & { image: Media | null },
         })),
       };
     }),
 });
-
-// import { Category } from "@/payload-types";
-// import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-// import type { Where } from "payload";
-// import { z } from "zod";
-
-// export const productsRouter = createTRPCRouter({
-//   getMany: baseProcedure
-//     .input(
-//       z.object({
-//         category: z.string().nullable().optional(),
-//         minPrice: z.string().nullable().optional(),
-//         maxPrice: z.string().nullable().optional(),
-//       })
-//     )
-//     .query(async ({ ctx, input }) => {
-//       const where: Where = {};
-
-//       // التعامل مع فلتر السعر
-//       const priceWhere: Record<string, number> = {};
-
-//       const hasMin =
-//         input.minPrice != null &&
-//         input.minPrice.trim() !== "" &&
-//         !Number.isNaN(Number(input.minPrice));
-
-//       const hasMax =
-//         input.maxPrice != null &&
-//         input.maxPrice.trim() !== "" &&
-//         !Number.isNaN(Number(input.maxPrice));
-
-//       let min = hasMin ? Number(input.minPrice) : undefined;
-//       let max = hasMax ? Number(input.maxPrice) : undefined;
-
-//       // إذا كان كلاهما موجود والقيم مقلوبة، يتم تبديلها
-//       if (min != null && max != null && min > max) {
-//         [min, max] = [max, min]; // استخدام destructuring assignment
-//       }
-
-//       if (min != null) {
-//         priceWhere.greater_than_equal = min;
-//       }
-//       if (max != null) {
-//         priceWhere.less_than_equal = max;
-//       }
-
-//       if (Object.keys(priceWhere).length > 0) {
-//         where.price = priceWhere;
-//       }
-
-//       // التعامل مع فلتر الفئة
-//       if (input.category && input.category.trim() !== "") {
-//         try {
-//           const categoriesData = await ctx.db.find({
-//             collection: "categories",
-//             limit: 1,
-//             depth: 1,
-//             pagination: false,
-//             where: {
-//               slug: {
-//                 equals: input.category.trim(),
-//               },
-//             },
-//           });
-
-//           if (categoriesData.docs.length > 0) {
-//             const subcategoriesSlugs: string[] = [];
-
-//             const formattedData = categoriesData.docs.map((doc) => ({
-//               ...doc,
-//               subcategories: (doc.subcategories?.docs ?? []).map((subDoc) => ({
-//                 ...(subDoc as Category),
-//                 subcategories: undefined,
-//               })),
-//             }));
-
-//             const parentCategory = formattedData[0];
-//             if (parentCategory) {
-//               // جمع slugs للفئات الفرعية
-//               if (parentCategory.subcategories) {
-//                 subcategoriesSlugs.push(
-//                   ...parentCategory.subcategories
-//                     .map((subcategory) => subcategory.slug)
-//                     .filter((slug): slug is string => slug != null)
-//                 );
-//               }
-
-//               // إضافة فلتر الفئة
-//               where["category.slug"] = {
-//                 in: [parentCategory.slug, ...subcategoriesSlugs].filter(
-//                   (slug): slug is string => slug != null
-//                 ),
-//               };
-//             }
-//           }
-//         } catch (error) {
-//           console.error("error in get Category:", error);
-//         }
-//       }
-
-//       try {
-//         const data = await ctx.db.find({
-//           collection: "products",
-//           depth: 1,
-//           where,
-//         });
-
-//         return data;
-//       } catch (error) {
-//         console.error("error in get Products", error);
-//         throw new Error("error in get Products");
-//       }
-//     }),
-// });
