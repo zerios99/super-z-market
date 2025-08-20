@@ -136,8 +136,8 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                       <div className="font-medium">
                         {stars === 1 ? "star" : "stars"}
                       </div>
-                      <Progress value={3} className="h-[1lh]" />
-                      <div className="font-medium">{0}%</div>
+                      <Progress value={45} className="h-[1lh]" />
+                      <div className="font-medium">{45}%</div>
                     </Fragment>
                   ))}
                 </div>
