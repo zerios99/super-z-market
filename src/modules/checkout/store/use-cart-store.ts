@@ -59,7 +59,7 @@ export const useCartStore = create<CartState>()(
         get().tenantCarts[tenantSlug]?.productIds || [],
     }),
     {
-      name: "Dukan-cart",
+      name: "dukan-cart",
       storage: createJSONStorage(() => localStorage),
     }
   )
