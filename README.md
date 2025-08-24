@@ -41,14 +41,14 @@ SuperJSON – Enhanced JSON serialization
 🚀 Getting Started
 1️⃣ Clone the Repository
 bash
-نسخ
-تحرير
+
+
 git clone https://github.com/yourusername/super-z-market.git
 cd super-z-market
 2️⃣ Install Dependencies
 bash
-نسخ
-تحرير
+
+
 npm install
 # or
 yarn install
@@ -60,15 +60,15 @@ bun install
 Create a .env file in the root directory and configure:
 
 env
-نسخ
-تحرير
+
+
 DATABASE_URI=mongodb+srv://your-connection-string
 PAYLOAD_SECRET=your-secret
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 4️⃣ Run the Development Server
 bash
-نسخ
-تحرير
+
+
 npm run dev
 # or
 yarn dev
