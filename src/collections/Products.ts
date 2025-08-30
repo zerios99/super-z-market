@@ -12,6 +12,10 @@ export const Products: CollectionConfig = {
       return Boolean(tenant?.stripeDetailsSubmitted);
     },
   },
+  admin: {
+    useAsTitle: "name",
+    description: "You must verify your account before creating products",
+  },
   fields: [
     {
       name: "name",
