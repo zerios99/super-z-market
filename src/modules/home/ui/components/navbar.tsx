@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
@@ -48,7 +47,6 @@ const navbarItems = [
 export const Navbar = () => {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const trpc = useTRPC();
   const session = useQuery(trpc.auth.session.queryOptions());
 
@@ -60,13 +58,15 @@ export const Navbar = () => {
           Dukan{" "}
         </span>
       </Link>
-
+      
+      {/* تمرير معلومات المستخدم للسايد بار */}
       <NavbarSidebar
         items={navbarItems}
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
+        user={session.data?.user} // إضافة هذا السطر
       />
-
+      
       <div className="items-center gap-4 hidden lg:flex">
         {navbarItems.map((item) => (
           <NavbarItem
@@ -78,7 +78,7 @@ export const Navbar = () => {
           </NavbarItem>
         ))}
       </div>
-
+      
       {session.data?.user ? (
         <div className="hidden lg:flex items-center gap-4">
           <Button
@@ -109,7 +109,6 @@ export const Navbar = () => {
               </Link>
             </Button>
           </div>
-
           <div className="flex lg:hidden items-center justify-center">
             <Button
               variant={"ghost"}
