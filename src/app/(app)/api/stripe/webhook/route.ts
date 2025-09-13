@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Stripe } from "stripe";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { ExpandedLineItem } from "@/modules/checkout/types";
+
+// تعريف نوع Payload
+type PayloadInstance = Awaited<ReturnType<typeof getPayload>>;
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
@@ -68,7 +72,7 @@ export async function POST(req: Request) {
   return NextResponse.json({ received: true }, { status: 200 });
 }
 
-async function handleCheckoutCompleted(event: Stripe.Event, payload: any) {
+async function handleCheckoutCompleted(event: Stripe.Event, payload: PayloadInstance) {
   const data = event.data.object as Stripe.Checkout.Session;
 
   if (!data.metadata?.userId) {
@@ -133,7 +137,7 @@ async function handleCheckoutCompleted(event: Stripe.Event, payload: any) {
   console.log(`Created ${lineItems.length} orders for user ${user.id}`);
 }
 
-async function handleAccountUpdated(event: Stripe.Event, payload: any) {
+async function handleAccountUpdated(event: Stripe.Event, payload: PayloadInstance) {
   const data = event.data.object as Stripe.Account;
 
   const updateResult = await payload.update({
