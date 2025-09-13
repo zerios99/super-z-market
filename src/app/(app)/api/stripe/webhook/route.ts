@@ -121,13 +121,11 @@ async function handleCheckoutCompleted(event: Stripe.Event, payload: PayloadInst
     return payload.create({
       collection: "orders",
       data: {
-        stripeCheckoutSessionId: data.id,
-        stripeAccountId: event.account || null,
+        name: item.price.product.name,
         user: user.id,
         product: item.price.product.metadata.id,
-        name: item.price.product.name,
-        amount: item.amount_total,
-        currency: item.currency,
+        stripeCheckoutSessionId: data.id,
+        stripeAccountId: event.account || null,
       },
     });
   });
