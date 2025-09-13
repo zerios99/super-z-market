@@ -126,7 +126,6 @@ async function handleCheckoutCompleted(event: Stripe.Event, payload: PayloadInst
         user: user.id,
         product: item.price.product.metadata.id,
         name: item.price.product.name,
-        quantity: item.quantity || 1,
         amount: item.amount_total,
         currency: item.currency,
       },
