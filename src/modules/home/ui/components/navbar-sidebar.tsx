@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Sheet,
   SheetContent,
@@ -17,7 +16,7 @@ interface Props {
   items: NavbarItems[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  user?: any; // إضافة prop للمستخدم
+  user?: { id: string; email: string } | null; // نوع أكثر تحديداً
 }
 
 export const NavbarSidebar = ({ items, open, onOpenChange, user }: Props) => {
