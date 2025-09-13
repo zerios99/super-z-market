@@ -146,8 +146,6 @@ async function handleAccountUpdated(event: Stripe.Event, payload: PayloadInstanc
     },
     data: {
       stripeDetailsSubmitted: data.details_submitted,
-      chargesEnabled: data.charges_enabled,
-      payoutsEnabled: data.payouts_enabled,
     },
   });
 
