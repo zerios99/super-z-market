@@ -80,14 +80,27 @@ export const Navbar = () => {
       </div>
       
       {session.data?.user ? (
-        <div className="hidden lg:flex items-center gap-4">
-          <Button
-            asChild
-            className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black hover:bg-pink-400 hover:text-black transition-colors text-lg text-white"
-          >
-            <Link href={"/admin"}>Dashboard</Link>
-          </Button>
-        </div>
+        <>
+          {/* Dashboard للشاشات الكبيرة */}
+          <div className="hidden lg:flex items-center gap-4">
+            <Button
+              asChild
+              className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black hover:bg-pink-400 hover:text-black transition-colors text-lg text-white"
+            >
+              <Link href={"/admin"}>Dashboard</Link>
+            </Button>
+          </div>
+          {/* زر القائمة للهواتف */}
+          <div className="flex lg:hidden items-center justify-center">
+            <Button
+              variant={"ghost"}
+              className="size-12 border-transparent bg-white"
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <MenuIcon />
+            </Button>
+          </div>
+        </>
       ) : (
         <>
           <div className="hidden lg:flex">
